@@ -127,7 +127,8 @@ function schedule_notifications( $entry, $form ) {
 			$options->form_id = $form['id'];
 			$options->entry_id = $entry['id'];
 			$options->notifications = $notifications_to_send;
-			wp_schedule_single_event( gfc_get_timestamp_from_event($event), 'gfc_action_send_cron_notification',array($options));
+			wp_schedule_single_event( 
+				($event), 'gfc_action_send_cron_notification',array($options));
 		}
 	}
 	
@@ -169,7 +170,7 @@ function gfc_get_timestamp_from_event($event){
 	
 	
 	if($eventParts[0] != 'cron' || empty($eventParts[1]) || empty($eventParts[2])) return false;
-	switch($eventParts[2]){
+	switch(substr($eventParts[2], 0, 1)){
 		case 'm':
 			$timestamp = time() + intval($eventParts[1]) * MINUTE_IN_SECONDS;
 			break;
